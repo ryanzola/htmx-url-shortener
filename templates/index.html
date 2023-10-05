@@ -1,0 +1,39 @@
+{{ template "base.html" }}
+
+<div class="p-4">
+  <p class="mb-4 text-lg">The best <span class="bg-yellow-200">URL shortener</span></p>
+
+  <form class="flex flex-col gap-4">
+    <input 
+      class="w-2/5 text-lg px-4 py-2 border-2 border-neutral-600 rounded" 
+      placeholder="enter your long url" 
+      type="url" 
+      name="url" 
+      id="url" 
+      autocomplete="off" 
+      spellcheck="off"
+      required
+    >
+
+    <input 
+      class="w-2/5 text-lg px-4 py-2 border-2 border-neutral-600 rounded" 
+      placeholder="enter hash (optional)" 
+      type="text" 
+      name="hash" 
+      id="hash" 
+      autocomplete="off" 
+      spellcheck="off"
+    >
+
+    <button 
+      class="w-2/5 text-lg font-bold px-4 py-2 border-2 bg-neutral-500 border-neutral-700 rounded text-white" 
+      hx-post="/create"
+      hx-target="#message"
+      hx-swap="innerHTML"
+    >
+      Shorten
+    </button>
+
+    <p id="message"></p>
+  </form>
+</div >

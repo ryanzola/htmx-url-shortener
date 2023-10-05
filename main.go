@@ -3,29 +3,22 @@ package main
 import (
 	"fmt"
 	"log"
-	"net/http"
-	"os"
-	"time"
 )
 
 func main() {
-	// Set up a simple web server
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello, World!")
-	})
+	fmt.Println("Go Short Server Version 0.1")
 
-	// Get the PORT environment variable
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
+	store := NewDbInstance()
+	err := store.Init()
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	// Start the server
-	log.Printf("Server listening on port %s", port)
-	srv := &http.Server{
-		Addr:         fmt.Sprintf(":%s", port),
-		ReadTimeout:  5 * time.Second,
-		WriteTimeout: 10 * time.Second,
+	api := NewAPIServer("localhost:3579", store)
+
+	err = api.Start()
+	if err != nil {
+		log.Fatal(err)
 	}
-	log.Fatal(srv.ListenAndServe())
+
 }
